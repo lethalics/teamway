@@ -3,6 +3,7 @@ package com.teamway.test.configuration.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        final ApiError apiError = ApiError.builder()
+        ApiError apiError = ApiError.builder()
             .message("Found " + ex.getBindingResult().getErrorCount() + " errors")
             .status(HttpStatus.BAD_REQUEST)
             .errors(addBindingExceptions(ex.getBindingResult()))
@@ -35,13 +36,32 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleBindException(
         BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        final ApiError apiError = ApiError.builder()
+        ApiError apiError = ApiError.builder()
             .message("Found " + ex.getBindingResult().getErrorCount() + " errors")
             .status(HttpStatus.BAD_REQUEST)
             .errors(addBindingExceptions(ex))
             .build();
         return buildResponseEntity(apiError);
     }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ApiError apiError = ApiError.builder()
+            .message(ex.getMessage())
+            .status(HttpStatus.BAD_REQUEST)
+            .build();
+        return buildResponseEntity(apiError);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ApiError apiError = ApiError.builder()
+            .message(ex.getMessage())
+            .status(HttpStatus.BAD_REQUEST)
+            .build();
+        return buildResponseEntity(apiError);
+    }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -54,7 +74,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private List<ApiSubError> addBindingExceptions(BindingResult bindingResult) {
-        final List<ApiSubError> subErrors = new ArrayList<>();
+        List<ApiSubError> subErrors = new ArrayList<>();
         bindingResult.getFieldErrors().forEach(fieldError -> subErrors.add(buildFieldSubErrors(fieldError)));
         bindingResult.getGlobalErrors().forEach(globalError -> subErrors.add(buildGlobalSubErrors(globalError)));
 
@@ -62,7 +82,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ApiSubError buildFieldSubErrors(FieldError fieldError) {
-        final ApiSubError.ApiSubErrorBuilder subErrorBuilder = ApiSubError.builder();
+        ApiSubError.ApiSubErrorBuilder subErrorBuilder = ApiSubError.builder();
         subErrorBuilder.field(fieldError.getField());
         subErrorBuilder.rejectedValue(fieldError.getRejectedValue());
         subErrorBuilder.message(fieldError.getDefaultMessage());
@@ -72,7 +92,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ApiSubError buildGlobalSubErrors(ObjectError globalError) {
-        final ApiSubError.ApiSubErrorBuilder subErrorBuilder = ApiSubError.builder();
+        ApiSubError.ApiSubErrorBuilder subErrorBuilder = ApiSubError.builder();
         subErrorBuilder.message(globalError.getDefaultMessage());
 
         return subErrorBuilder.build();
