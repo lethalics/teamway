@@ -1,7 +1,7 @@
 package com.teamway.test.services;
 
-import com.teamway.test.controllers.requests.RequestWorkerDto;
-import com.teamway.test.controllers.responses.WorkerDto;
+import com.teamway.test.controllers.dto.RequestWorkerDto;
+import com.teamway.test.services.dto.WorkerDto;
 import com.teamway.test.repositories.WorkerRepository;
 import com.teamway.test.repositories.entities.WorkerEntity;
 import com.teamway.test.services.mappers.WorkerMapper;

@@ -1,7 +1,6 @@
 package com.teamway.test.controllers.integration;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -9,8 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.teamway.test.controllers.WorkerController;
-import com.teamway.test.controllers.requests.RequestWorkerDto;
-import com.teamway.test.controllers.responses.WorkerDto;
+import com.teamway.test.controllers.dto.RequestWorkerDto;
+import com.teamway.test.services.dto.WorkerDto;
 import com.teamway.test.services.WorkerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +46,6 @@ public class WorkerControllerIntegrationTest {
             .andExpect(jsonPath("$.firstName").value("Abc"))
             .andExpect(jsonPath("$.lastName").value("Def"));
     }
+
+    //todo Add tests for all endpoints and all use cases
 }

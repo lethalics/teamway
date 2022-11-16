@@ -1,4 +1,4 @@
-package com.teamway.test.controllers.responses;
+package com.teamway.test.services.dto;
 
 import lombok.Builder;
 @Builder

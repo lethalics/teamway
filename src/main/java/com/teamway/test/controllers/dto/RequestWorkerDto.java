@@ -1,4 +1,4 @@
-package com.teamway.test.controllers.requests;
+package com.teamway.test.controllers.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

@@ -1,7 +1,7 @@
 package com.teamway.test.controllers;
 
-import com.teamway.test.controllers.requests.RequestWorkerDto;
-import com.teamway.test.controllers.responses.WorkerDto;
+import com.teamway.test.controllers.dto.RequestWorkerDto;
+import com.teamway.test.services.dto.WorkerDto;
 import com.teamway.test.services.WorkerService;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;

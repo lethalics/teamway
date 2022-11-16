@@ -1,8 +1,6 @@
 package com.teamway.test.repositories.integration;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotEmpty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.teamway.test.repositories.WorkerRepository;
@@ -51,10 +49,4 @@ public class WorkerRepositoryIntegrationTest {
 
         assertTrue(result.isPresent());
     }
-
-    @Test
-    public void testUpdateWorker() {
-
-    }
-
 }

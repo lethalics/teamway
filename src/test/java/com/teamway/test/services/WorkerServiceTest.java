@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.teamway.test.controllers.requests.RequestWorkerDto;
+import com.teamway.test.controllers.dto.RequestWorkerDto;
 import com.teamway.test.repositories.WorkerRepository;
 import com.teamway.test.repositories.entities.WorkerEntity;
 import java.util.Optional;
