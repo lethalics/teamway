@@ -57,6 +57,11 @@ public class ShiftScheduleService {
         return getShiftSchedule(scheduleId);
     }
 
+    public Boolean deleteShiftSchedule(Long shiftScheduleId) {
+        int rowsDeleted = this.shiftScheduleRepository.deleteByIdWithResult(shiftScheduleId);
+        return rowsDeleted > 0;
+    }
+
     private ShiftScheduleEntity saveShiftSchedule(ShiftScheduleEntity entity) {
         try {
             return shiftScheduleRepository.save(entity);
