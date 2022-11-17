@@ -15,6 +15,7 @@
         <hibernate.validator.version>7.0.5.Final</hibernate.validator.version>
         <lombok.version>1.18.24</lombok.version>
         <h2database.version>2.1.214</h2database.version>
+        <openapi.version>1.6.11</openapi.version>
     </properties>
 
     <parent>
@@ -46,6 +47,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${openapi.version}</version>
         </dependency>
 
         <dependency>
