@@ -8,18 +8,19 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Entity
-@Table(name = "shift_schedule", uniqueConstraints = { @UniqueConstraint(columnNames = { "worker_id", "date" }) })
+@Table(
+    name = "shift_schedule",
+    uniqueConstraints = { @UniqueConstraint(columnNames = { "worker_id", "date" })},
+    indexes = { @Index(columnList = "date")})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

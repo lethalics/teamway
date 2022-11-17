@@ -1,13 +1,16 @@
 package com.teamway.test.services;
 
 import com.teamway.test.controllers.dto.RequestShiftScheduleDto;
+import com.teamway.test.controllers.dto.SearchShiftScheduleDto;
 import com.teamway.test.repositories.ShiftScheduleRepository;
 import com.teamway.test.repositories.WorkerRepository;
 import com.teamway.test.repositories.entities.Shift;
 import com.teamway.test.repositories.entities.ShiftScheduleEntity;
 import com.teamway.test.services.dto.ShiftScheduleDto;
 import com.teamway.test.services.mappers.ShiftScheduleMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -60,6 +63,13 @@ public class ShiftScheduleService {
     public Boolean deleteShiftSchedule(Long shiftScheduleId) {
         int rowsDeleted = this.shiftScheduleRepository.deleteByIdWithResult(shiftScheduleId);
         return rowsDeleted > 0;
+    }
+
+    public List<ShiftScheduleDto> searchShiftSchedule(SearchShiftScheduleDto searchShiftScheduleDto) {
+        var results = this.shiftScheduleRepository.searchShiftSchedule(searchShiftScheduleDto);
+        return results.stream()
+            .map(ShiftScheduleMapper::toShiftScheduleDto)
+            .collect(Collectors.toList());
     }
 
     private ShiftScheduleEntity saveShiftSchedule(ShiftScheduleEntity entity) {

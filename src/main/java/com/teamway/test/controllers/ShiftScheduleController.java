@@ -1,8 +1,10 @@
 package com.teamway.test.controllers;
 
 import com.teamway.test.controllers.dto.RequestShiftScheduleDto;
+import com.teamway.test.controllers.dto.SearchShiftScheduleDto;
 import com.teamway.test.services.ShiftScheduleService;
 import com.teamway.test.services.dto.ShiftScheduleDto;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,5 +50,11 @@ public class ShiftScheduleController {
         var deleted = this.shiftScheduleService.deleteShiftSchedule(id);
 
         return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ShiftScheduleDto>> searchShiftSchedule(@Valid SearchShiftScheduleDto searchShiftScheduleDto) {
+        var results = this.shiftScheduleService.searchShiftSchedule(searchShiftScheduleDto);
+        return ResponseEntity.ok(results);
     }
 }
