@@ -62,6 +62,11 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError illegalArgumentExceptionHandler(IllegalArgumentException ex) {
+        return logWarnAndGetApiErrorResponse(ex, HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

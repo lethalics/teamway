@@ -1,6 +1,8 @@
 package com.teamway.test.services.dto;
 
 import java.time.LocalDate;
+import lombok.Builder;
 
-public record ShiftScheduleDto(Long id, Long workerId, String fullName, LocalDate date) {
+@Builder
+public record ShiftScheduleDto(Long id, Long workerId, String workerName, LocalDate date) {
 }
