@@ -11,6 +11,7 @@ public class ShiftScheduleMapper {
             .id(shiftScheduleEntity.getId())
             .workerId(shiftScheduleEntity.getWorkerId())
             .workerName(workerEntity.getFirstName() + " " + workerEntity.getLastName())
+            .shift(shiftScheduleEntity.getShift().name())
             .date(shiftScheduleEntity.getDate())
             .build();
     }
@@ -20,6 +21,7 @@ public class ShiftScheduleMapper {
             .id(shiftScheduleData.id())
             .workerId(shiftScheduleData.workerId())
             .workerName(shiftScheduleData.workerFirstName() + " " + shiftScheduleData.workerLastName())
+            .shift(shiftScheduleData.shift().name())
             .date(shiftScheduleData.date())
             .build();
     }

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShiftScheduleRepository extends JpaRepository<ShiftScheduleEntity, Long> {
 
-    @Query("SELECT new com.teamway.test.repositories.models.ShiftScheduleData(sc.id, sc.workerId, w.firstName, w.lastName, sc.date) from ShiftScheduleEntity AS sc LEFT JOIN WorkerEntity AS w ON sc.workerId = w.id WHERE sc.id=:scheduleId ")
+    @Query("SELECT new com.teamway.test.repositories.models.ShiftScheduleData(sc.id, sc.workerId, w.firstName, w.lastName, sc.shift, sc.date) from ShiftScheduleEntity AS sc LEFT JOIN WorkerEntity AS w ON sc.workerId = w.id WHERE sc.id=:scheduleId")
     Optional<ShiftScheduleData> getShiftSchedule(@Param("scheduleId") Long scheduleId);
 }

@@ -4,5 +4,5 @@ import java.time.LocalDate;
 import lombok.Builder;
 
 @Builder
-public record ShiftScheduleDto(Long id, Long workerId, String workerName, LocalDate date) {
+public record ShiftScheduleDto(Long id, Long workerId, String workerName, String shift, LocalDate date) {
 }

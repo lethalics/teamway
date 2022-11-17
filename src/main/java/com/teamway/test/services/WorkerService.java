@@ -41,7 +41,7 @@ public class WorkerService {
             return Optional.empty();
         }
 
-        WorkerEntity workerEntity = updateWorkerEntity(workerRequest, workerEntityResult.get());
+        WorkerEntity workerEntity = updateWorkerEntityData(workerEntityResult.get(), workerRequest);
 
         workerRepository.save(workerEntity);
 
@@ -56,7 +56,7 @@ public class WorkerService {
         return result > 0;
     }
 
-    private WorkerEntity updateWorkerEntity(RequestWorkerDto workerRequest, WorkerEntity workerEntity) {
+    private WorkerEntity updateWorkerEntityData(WorkerEntity workerEntity, RequestWorkerDto workerRequest) {
         workerEntity.setFirstName(workerRequest.firstName());
         workerEntity.setLastName(workerRequest.lastName());
         return workerEntity;

@@ -1,6 +1,6 @@
 package com.teamway.test.services;
 
-import com.teamway.test.controllers.dto.RequestScheduleShiftDto;
+import com.teamway.test.controllers.dto.RequestShiftScheduleDto;
 import com.teamway.test.repositories.ShiftScheduleRepository;
 import com.teamway.test.repositories.WorkerRepository;
 import com.teamway.test.repositories.entities.Shift;
@@ -16,21 +16,21 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class ShiftSchedulerService {
+public class ShiftScheduleService {
 
     private final ShiftScheduleRepository shiftScheduleRepository;
     private final WorkerRepository workerRepository;
 
-    public ShiftScheduleDto addShiftSchedule(RequestScheduleShiftDto requestScheduleShiftDto) {
-        var workerEntityResult = this.workerRepository.findByIdAndActive(requestScheduleShiftDto.workerId(), true);
+    public ShiftScheduleDto addShiftSchedule(RequestShiftScheduleDto requestShiftScheduleDto) {
+        var workerEntityResult = this.workerRepository.findByIdAndActive(requestShiftScheduleDto.workerId(), true);
         if (workerEntityResult.isEmpty()) {
             throw new IllegalArgumentException("Invalid worker ID");
         }
         var workerEntity = workerEntityResult.get();
         var shiftScheduleEntity = ShiftScheduleEntity.builder()
             .workerId(workerEntity.getId())
-            .date(requestScheduleShiftDto.date())
-            .shift(Shift.valueOf(requestScheduleShiftDto.shift().name()))
+            .date(requestShiftScheduleDto.date())
+            .shift(Shift.valueOf(requestShiftScheduleDto.shift().name()))
             .build();
 
 
@@ -44,11 +44,32 @@ public class ShiftSchedulerService {
         return scheduleData.map(ShiftScheduleMapper::toShiftScheduleDto);
     }
 
+    public Optional<ShiftScheduleDto> updateShiftSchedule(Long scheduleId, RequestShiftScheduleDto requestShiftScheduleDto) {
+        var existingShiftScheduleEntityResult = this.shiftScheduleRepository.findById(scheduleId);
+        if (existingShiftScheduleEntityResult.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var updatedShiftScheduleEntity = this.updateShiftScheduleEntityData(existingShiftScheduleEntityResult.get(), requestShiftScheduleDto);
+
+        this.saveShiftSchedule(updatedShiftScheduleEntity);
+
+        return getShiftSchedule(scheduleId);
+    }
+
     private ShiftScheduleEntity saveShiftSchedule(ShiftScheduleEntity entity) {
         try {
             return shiftScheduleRepository.save(entity);
         } catch (DataIntegrityViolationException ex) {
-            throw new IllegalArgumentException(String.format("There is a shift already scheduled on %s for worker_id: %d", entity.getDate(), entity.getWorkerId()));
+            throw new IllegalArgumentException(String.format("There is already a shift scheduled on %s for worker_id: %d", entity.getDate(), entity.getWorkerId()));
         }
+    }
+
+    private ShiftScheduleEntity updateShiftScheduleEntityData(ShiftScheduleEntity shiftScheduleEntity, RequestShiftScheduleDto requestShiftScheduleDto) {
+        shiftScheduleEntity.setWorkerId(requestShiftScheduleDto.workerId());
+        shiftScheduleEntity.setShift(Shift.valueOf(requestShiftScheduleDto.shift().name()));
+        shiftScheduleEntity.setDate((requestShiftScheduleDto.date()));
+
+        return shiftScheduleEntity;
     }
 }
