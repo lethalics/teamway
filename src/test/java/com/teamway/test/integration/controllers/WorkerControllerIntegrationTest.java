@@ -1,4 +1,4 @@
-package com.teamway.test.controllers.integration;
+package com.teamway.test.integration.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

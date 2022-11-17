@@ -1,4 +1,4 @@
-package com.teamway.test.repositories.integration;
+package com.teamway.test.integration.repositories;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotEmpty;
 import static org.junit.jupiter.api.Assertions.assertEquals;

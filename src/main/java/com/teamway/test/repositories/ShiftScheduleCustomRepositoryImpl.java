@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class ShiftScheduleRepositoryImpl implements ShiftScheduleCustomRepository {
+public class ShiftScheduleCustomRepositoryImpl implements ShiftScheduleCustomRepository {
 
     @PersistenceContext
     private EntityManager entityManager;

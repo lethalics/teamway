@@ -1,4 +1,4 @@
-package com.teamway.test.repositories.integration;
+package com.teamway.test.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
